@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Geolocation (
     FOREIGN KEY (geolocation_state) REFERENCES StateName(state)
 );
 
--- .import --csv --skip 1 -v data/geolocation_dataset.csv Geolocation
+-- .import --csv --skip 1 -v olist_geolocation_dataset.csv Geolocation
 
 
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Customers (
     FOREIGN KEY (customer_zip_code_prefix) REFERENCES Geolocation(geolocation_zip_code_prefix)
 );
 
--- .import --csv --skip 1 -v data/customers_dataset.csv Customers
+-- .import --csv --skip 1 -v customers_dataset.csv Customers
 
 -- Create table Sellers
 CREATE TABLE IF NOT EXISTS Sellers (
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS Sellers (
     FOREIGN KEY (seller_zip_code_prefix) REFERENCES Geolocation(geolocation_zip_code_prefix)
 );
 
--- .import --csv --skip 1 -v data/sellers_dataset.csv Sellers
+-- .import --csv --skip 1 -v olist_sellers_dataset.csv Sellers
 
 -- Create table Orders
 CREATE TABLE IF NOT EXISTS Orders (
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS Orders (
     FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
--- .import --csv --skip 1 -v data/orders_dataset.csv Orders
+-- .import --csv --skip 1 -v orders_dataset.csv Orders
 
 
 
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS ProductCategoryName (
     product_category_name_english TEXT 
 );
 
--- .import --csv --skip 1 -v data/product_category_name_translation.csv ProductCategoryName
+-- .import --csv --skip 1 -v product_category_name_translation.csv ProductCategoryName
 
 
 -- Create table Products
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS Products (
     FOREIGN KEY (product_category_name) REFERENCES ProductCategoryName(product_category_name)
 );
 
--- .import --csv --skip 1 -v data/products_dataset.csv Products
+-- .import --csv --skip 1 -v products_dataset.csv Products
 
 
 
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS OrderItem (
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 
--- .import --csv --skip 1 -v data/order_items_dataset.csv OrderItem
+-- .import --csv --skip 1 -v order_items_dataset.csv OrderItem
 
 
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS Payments (
     FOREIGN KEY (order_id) REFERENCES Orders(order_id)
 );
 
--- .import --csv --skip 1 -v data/order_payments_dataset.csv Payments
+-- .import --csv --skip 1 -v order_payments_dataset.csv Payments
 
 
 
@@ -140,6 +140,6 @@ CREATE TABLE IF NOT EXISTS Reviews (
     FOREIGN KEY (order_id) REFERENCES Orders(order_id)
 );
 
--- .import --csv --skip 1 -v data/order_review_dataset_clean.csv Reviews
+-- .import --csv --skip 1 -v order_review_dataset_clean.csv Reviews
 
 
