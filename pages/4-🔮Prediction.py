@@ -20,7 +20,7 @@ st.sidebar.header('Make Prediction')
 retard_livraison = st.sidebar.text_input('Delivery Delay')
 temps_livraison = st.sidebar.text_input('Delivery Time')
 produit_recu = st.sidebar.text_input('Product Delivery Status')
-score = df[['score']]  # Utilisez une DataFrame pour x avec une seule colonne
+score = df['score']  # Utilisez une DataFrame pour x avec une seule colonne
 make_pred_API = st.sidebar.button('Predict')
 
 # Charger le modèle RandomForestClassifier à partir du fichier pickle
@@ -47,6 +47,19 @@ plot2 = px.histogram(
 if make_pred_API:
     # Créer un DataFrame pour la prédiction
     produit_recu_value = 1 if produit_recu.lower() == 'yes' else 0
+    url = f"http://localhost:8000/{float(retard_livraison)}/{float(temps_livraison)}/{float(produit_recu_value)}/{float(score.iloc[0])}"
+
+    
+    response = requests.get(url)
+
+    
+    if response.status_code == 200:
+        score_pred = response.json()["prediction"]
+        st.success(f"Prediction result: {score_pred} ")
+    else:
+        st.error("Error in prediction request.")
+    
+    
 
     p1_df = pd.DataFrame({
         'retard_livraison': [float(retard_livraison)],  # Assurez-vous que les données sont dans le bon format

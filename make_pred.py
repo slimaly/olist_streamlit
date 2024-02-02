@@ -6,7 +6,7 @@ def make_prediction(x):
         loaded_model = pickle.load(fichier_modele)
 
     predictions_out = loaded_model.predict(x)
-
+    
     with open('encoder.json') as json_file:
        data = json.load(json_file)
 

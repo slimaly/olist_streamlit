@@ -1,34 +1,30 @@
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+import json
 import pickle
 import sqlite3
+import numpy as np
+
 
 def make_model_save():
-    # Connexion à la base de données
-    connection = sqlite3.connect("olist.db")
 
-    # Charger les données à partir de la base de données
+    connection = sqlite3.connect("olist.db")
     df = pd.read_sql_query("SELECT * FROM TrainingDataset", connection)
 
-    # Séparer la cible (y) et les caractéristiques (x)
+   
+    # Separate Target and Features : x and y datas
     y = df['score']
-    x = df[['score', 'produit_recu', 'retard_livraison', 'temps_livraison']]  # Ajoutez les colonnes nécessaires
+    x = df(['retard_livraison', 'temps_livraison', 'produit_recu'], axis=1)
 
-    # Séparer l'ensemble d'entraînement de l'ensemble de test
+    # Separate TrainSet / TestSet
     x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8)
 
-    # Créer et entraîner le modèle RandomForestClassifier
+    # Train model
     model = RandomForestClassifier(max_depth=2, random_state=0)
     model.fit(x_train, y_train)
 
-    # Sauvegarder le modèle dans un fichier pickle
+    # Save model
     with open('main_model.pkl', 'wb') as fichier_modele:
         pickle.dump(model, fichier_modele)
-
-    # Fermer la connexion à la base de données
-    connection.close()
-
-# Appeler la fonction pour créer et sauvegarder le modèle
-make_model_save()
-

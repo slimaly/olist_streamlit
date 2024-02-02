@@ -18,12 +18,12 @@ def train_model():
     return {'Response' : 'Training completed'}
 
 @app.get('/{x1}/{x2}/{x3}/{x4}')
-def get_pred(x1,x2,x3,x4):
+def get_pred(x1: float, x2: float, x3: float, x4: float):
     p1 =[x1,x2,x3,x4]
     x = np.array([p1])
-    print(x1(type))
+    
    
-    col_headers = ['score', 'produit_recu', 'temps_livraison', 'retard_livraison']
+    col_headers = ['score','retard_livraison', 'temps_livraison', 'produit_recu']
 
     x_df = pd.DataFrame(x, columns=col_headers)
     print('x', x_df)
